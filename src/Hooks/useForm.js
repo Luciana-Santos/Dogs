@@ -3,13 +3,13 @@ import { useState } from 'react';
 const types = {
   email: {
     regex:
-      /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/,
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     message: 'Preencha um email válido.',
   },
   password: {
     regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
     message:
-      'A senha deve ter 1 caractere maiusculo, 1 minusculo e 1 simbolo. Com no minimo 8 caracteres.',
+      'A senha deve ter 1 caractere maiusculo, 1 minusculo e 1 digito. Com no minimo 8 caracteres.',
   },
 };
 
@@ -22,7 +22,7 @@ const useForm = (type) => {
     if (value.length === 0) {
       setError('Preencha um valor.');
       return false;
-    } else if (types[type] && types[type].regex.test(value)) {
+    } else if (types[type] && !types[type].regex.test(value)) {
       setError(types[type].message);
       return false;
     } else {
