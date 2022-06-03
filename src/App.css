@@ -45,6 +45,10 @@ a {
   padding-inline: 1rem;
 }
 
+.mainContainer {
+  margin-top: 4rem;
+}
+
 .title {
   font-family: var(--type-seconde);
   line-height: 1;
