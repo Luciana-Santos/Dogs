@@ -4,20 +4,23 @@ import FeedPhotos from './FeedPhotos';
 
 const Feed = ({ user }) => {
   const [modalPhoto, setModalPhoto] = useState(null);
-  const [pages, setPages] = useState([1, 2]);
+  const [pages, setPages] = useState([1]);
+  const [infinite, setInfinite] = useState(true);
 
   useEffect(() => {
     let wait = false;
 
     function infiniteScroll() {
-      const scroll = window.scrollY;
-      const height = document.body.offsetHeight - window.innerHeight;
-      if (scroll > height * 0.75 && !wait) {
-        setPages((pages) => [...pages, pages.length + 1]);
-        wait = true;
-        setTimeout(() => {
-          wait = false;
-        }, 500);
+      if (infinite) {
+        const scroll = window.scrollY;
+        const height = document.body.offsetHeight - window.innerHeight;
+        if (scroll > height * 0.75 && !wait) {
+          setPages((pages) => [...pages, pages.length + 1]);
+          wait = true;
+          setTimeout(() => {
+            wait = false;
+          }, 500);
+        }
       }
     }
 
@@ -28,7 +31,7 @@ const Feed = ({ user }) => {
       window.removeEventListener('wheel', infiniteScroll);
       window.removeEventListener('scroll', infiniteScroll);
     };
-  }, []);
+  }, [infinite]);
 
   return (
     <div>
@@ -42,6 +45,7 @@ const Feed = ({ user }) => {
             page={page}
             user={user}
             setModalPhoto={setModalPhoto}
+            setInfinite={setInfinite}
           />
         );
       })}
